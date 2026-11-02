@@ -1,4 +1,8 @@
-# Ядро данных расписания
+<p align="center">
+  <img alt="fix-the-geometry-of-this-pixel-icon--redraw-the-da" src="https://github.com/user-attachments/assets/7c01c8af-ac1c-4cae-a078-cfd962b5264e" width="160" alt="Логотип" />
+</p>
+
+<h1 align="center"> Парсер расписания </h1> 
 
 **Скрипт для сбора, нормализации и сохранения расписания МГТУ им. Баумана (LKS) в удобный файл.**
 
