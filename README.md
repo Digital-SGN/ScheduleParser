@@ -1,5 +1,5 @@
 <p align="center">
-  <img alt="fix-the-geometry-of-this-pixel-icon--redraw-the-da" src="https://github.com/user-attachments/assets/7c01c8af-ac1c-4cae-a078-cfd962b5264e" width="140" alt="Логотип" />
+  <img width="140" src="https://github.com/Digital-SGN/Handbook/blob/main/assets/logo_schedule_parser.png" alt="Логотип" />
 </p>
 
 <h1 align="center"> Парсер расписания </h1> 
