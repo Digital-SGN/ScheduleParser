@@ -30,7 +30,7 @@
 - <img src="https://cdn.simpleicons.org/json/0CBFA1" width="16" /> JSON / CSV (выходной формат)
 
 **Инструменты:**
-- <img src="https://cdn.simpleicons.org/requests/0CBFA1" width="16" /> Requests (для запросов к LKS)
+- <img src="https://cdn.simpleicons.org/httpie/0CBFA1" width="16" /> Requests (для запросов к LKS)
 - <img src="https://cdn.simpleicons.org/docker/0CBFA1" width="16" /> Docker (опционально)
 
 ---
