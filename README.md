@@ -3,8 +3,9 @@
 </p>
 
 <h1 align="center"> Парсер расписания </h1> 
-
-**Скрипт для сбора, нормализации и сохранения расписания МГТУ им. Баумана (LKS) в удобный файл.**
+<p align="center">
+  Скрипт для сбора, нормализации и сохранения расписания МГТУ им. Баумана (LKS) в удобный файл.
+</p>
 
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.12-3776AB?style=flat-square&logo=python&logoColor=white" />
