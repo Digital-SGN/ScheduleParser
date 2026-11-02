@@ -11,7 +11,7 @@
 2. <img src="https://cdn.simpleicons.org/json/0CBFA1" width="16" align="middle" /> **Нормализация:** превращает сырые дни недели в реальные календарные даты, а UUID аудиторий — в понятные номера (например, "501").
 3. <img src="https://cdn.simpleicons.org/databricks/0CBFA1" width="16" align="middle" /> **Сохранение:** выгружает готовые данные в локальный файл (JSON/CSV). Расписание меняется редко (раз в семестр), поэтому база данных избыточна.
 
-> ⚡ **Этот скрипт — фундамент для будущих продуктов:**
+>  **Этот скрипт — фундамент для будущих продуктов:**
 > - <img src="https://cdn.simpleicons.org/googlemaps/0CBFA1" width="16" align="middle" /> Поиск свободных аудиторий (где можно посидеть или провести мероприятие).
 > - <img src="https://cdn.simpleicons.org/gnometerminal/0CBFA1" width="16" align="middle" /> Калькулятор нагрузки (поиск оптимального времени, чтобы пришло больше людей).
 
@@ -35,7 +35,7 @@ flowchart LR
     class File db;
 ```
 
-## <img src="https://cdn.simpleicons.org/intel/0CBFA1" width="24" align="middle" /> Как это работает (Механика парсинга)
+## <img src="https://cdn.simpleicons.org/intel/0CBFA1" width="24" align="middle" /> Механика парсинга
 
 1. **Получение структуры:** скрипт скачивает дерево факультетов и групп, чтобы найти UUID нужных групп.
 2. **Запрос расписания:** идёт запрос на `schedules/groups/<uuid>/private`.
@@ -43,7 +43,7 @@ flowchart LR
 4. **Обработка нечетных/четных недель:** скрипт корректно раскладывает расписание для "числителя" и "знаменателя".
 5. **Парсинг аудиторий:** если массив `audiences` пуст — значит, аудитория не назначена. Если есть — извлекаем номер и корпус.
 
-## <img src="https://cdn.simpleicons.org/json/0CBFA1" width="24" align="middle" /> Формат вывода (JSON)
+## <img src="https://cdn.simpleicons.org/json/0CBFA1" width="24" align="middle" /> Пример формата вывода (JSON)
 
 На выходе получаем чистый JSON-файл:
 
