@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="140" src="https://github.com/Digital-SGN/Handbook/blob/main/assets/logo_schedule_parser.png" alt="Логотип" />
+  <img width="160" src="https://github.com/Digital-SGN/Handbook/blob/main/assets/logo_schedule_parser.png" alt="Логотип" />
 </p>
 
 <h1 align="center"> Парсер расписания </h1> 
