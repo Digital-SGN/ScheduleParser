@@ -1,5 +1,11 @@
+import datetime
 from parser import parse_schedule
 from api_client import *
-import datetime
+from file_creator import save_schedule_to_file
 
-print(parse_schedule(get_groups_schedule(get_group_uuids('8c1b7bb8-e690-11db-89c3-000cf1a7cbf0')), 17, datetime.date(2026, 9, 1)))
+
+schedule = parse_schedule(
+    get_groups_schedule(get_group_uuids('8c1b7bb8-e690-11db-89c3-000cf1a7cbf0')), 
+    17, datetime.date(2026, 9, 1)
+)
+save_schedule_to_file(schedule, '../schedule.json')
