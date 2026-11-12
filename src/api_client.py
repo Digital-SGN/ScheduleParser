@@ -1,5 +1,5 @@
 import requests
-from exceptions import ScheduleNotFoundError, GroupNotFoundError
+from exceptions import FilialNotFoundError
 from tqdm import tqdm
 
 
@@ -13,9 +13,6 @@ def get_group_schedule(group_id: str) -> dict:
     Returns:
         Словарь, в котором ключом является название группы,
         а значением — её расписание.
-
-    Raises:
-        ScheduleNotFoundError: Если расписание не найдено.
     """
     url: str = (
         f'https://lks.bmstu.ru/lks-back/api/v1/schedules/groups/{group_id}/public'
@@ -32,8 +29,6 @@ def get_group_schedule(group_id: str) -> dict:
 
         return group_schedule
 
-    raise ScheduleNotFoundError("Расписание не найдено")
-
 
 def get_groups_schedule(group_ids: list[str]) -> dict:
     """
@@ -48,9 +43,6 @@ def get_groups_schedule(group_ids: list[str]) -> dict:
 
     Returns:
         Словарь, содержащий названия групп и соответствующие им расписания.
-
-    Raises:
-        ScheduleNotFoundError: Если расписание хотя бы одной группы не найдено.
     """
     group_schedules: dict = {}
 
@@ -61,7 +53,8 @@ def get_groups_schedule(group_ids: list[str]) -> dict:
     ):
         schedule: dict = get_group_schedule(group_id)
 
-        group_schedules.update(schedule)
+        if schedule is not None:
+            group_schedules.update(schedule)
 
     return group_schedules
 
@@ -81,7 +74,7 @@ def get_group_uuids(filial_uuid: str) -> list[str]:
         Список UUID всех учебных групп найденного филиала.
 
     Raises:
-        GroupNotFoundError: Если филиал с указанным UUID не найден.
+        FilialNotFoundError: Если филиал с указанным UUID не найден.
         requests.exceptions.Timeout: Если превышено время ожидания ответа.
         requests.exceptions.ConnectionError: Если не удалось установить соединение.
         requests.exceptions.RequestException: Если произошла другая ошибка запроса.
@@ -116,4 +109,4 @@ def get_group_uuids(filial_uuid: str) -> list[str]:
 
                 return group_ids
 
-    raise GroupNotFoundError(f'Группа {filial_uuid} не найдена')
+    raise FilialNotFoundError(f'Филиал {filial_uuid} не найдена')

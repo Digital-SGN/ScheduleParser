@@ -3,11 +3,6 @@ class APIError(Exception):
     pass
 
 
-class GroupNotFoundError(APIError):
-    """Группа не найдена."""
-    pass
-
-
-class ScheduleNotFoundError(APIError):
-    """Расписание не найдено."""
+class FilialNotFoundError(APIError):
+    """Филиал не найден."""
     pass
