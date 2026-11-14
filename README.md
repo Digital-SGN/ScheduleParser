@@ -35,16 +35,6 @@ pip install -r requirements.txt
 
 Все параметры — в `src/settings.py`. Отредактируйте файл перед запуском:
 
-```python
-FILIAL     = '8c1b7bb8-e690-11db-89c3-000cf1a7cbf0'  # UUID филиала
-START_DATE = '2026-09-01'                            # начало семестра
-WEEKS      = 17                                      # сколько недель разворачивать
-OUTPUT     = 'schedule.json'                         # .json или .csv
-WORKERS    = 16                                      # потоков параллельных запросов
-TIMEOUT    = 30                                      # таймаут запроса, сек
-VERBOSE    = False                                   # подробные логи (DEBUG)
-```
-
 ### Параметры `settings.py`
 
 | Параметр | По умолчанию | Описание |
