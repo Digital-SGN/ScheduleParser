@@ -35,8 +35,6 @@ pip install -r requirements.txt
 
 Все параметры — в `src/settings.py`. Отредактируйте файл перед запуском:
 
-### Параметры `settings.py`
-
 | Параметр | По умолчанию | Описание |
 |---|---|---|
 | `FILIAL` | — | UUID филиала (см. `/structure` в API LKS) |
