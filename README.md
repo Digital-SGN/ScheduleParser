@@ -37,7 +37,7 @@ pip install -r requirements.txt
 
 | Параметр | По умолчанию | Описание |
 |---|---|---|
-| `FILIAL` | `8c1b7... МГТУ им. Баумана` | UUID филиала (см. `/structure` в API LKS) |
+| `FILIAL` | `8c1b7... (головной вуз)` | UUID филиала (см. `/structure` в API LKS) |
 | `START_DATE` | `2026-09-01` | Дата начала семестра, `YYYY-MM-DD` |
 | `WEEKS` | `17` | Сколько недель разворачивать |
 | `OUTPUT` | `schedule.json` | Выходной файл (`.json` или `.csv`) |
