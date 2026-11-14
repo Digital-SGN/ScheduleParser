@@ -100,9 +100,9 @@ DONE: сохранено в schedule.json
 
 ```mermaid
 flowchart TD
-    LKS["**API LKS МГТУ**<br/>/structure<br/>/schedules/groups/{uuid}/public"]
-    Parser["**main.py**<br/>(сбор и нормализация)"]
-    File[("**schedule.json**<br/>или .csv")]
+    LKS["<b>API LKS МГТУ</b><br/>/structure<br/>/schedules/groups/{uuid}/public"]
+    Parser["<b>main.py</b><br/>(сбор и нормализация)"]
+    File[("<b>schedule.json</b><br/>или .csv")]
 
     LKS -->|"GET /structure"| Parser
     LKS -->|"GET /schedules/*<br/>(N потоков)"| Parser
