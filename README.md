@@ -33,7 +33,7 @@ pip install -r requirements.txt
 
 ## Настройка
 
-Все параметры — в `src/settings.py`. Отредактируйте файл перед запуском:
+Все параметры — в `src/settings.py`:
 
 | Параметр | По умолчанию | Описание |
 |---|---|---|
@@ -45,9 +45,7 @@ pip install -r requirements.txt
 | `TIMEOUT` | `30` | Таймаут одного запроса, сек |
 | `VERBOSE` | `False` | Подробные логи (уровень DEBUG) |
 
-## Использование
-
-После настройки `src/settings.py`:
+## Запуск
 
 ```bash
 python src/main.py
