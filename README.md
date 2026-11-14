@@ -36,8 +36,6 @@ pip install -r requirements.txt
 Все параметры — в `src/settings.py`. Отредактируйте файл перед запуском:
 
 ```python
-# src/settings.py
-
 FILIAL     = '8c1b7bb8-e690-11db-89c3-000cf1a7cbf0'  # UUID филиала
 START_DATE = '2026-09-01'                            # начало семестра
 WEEKS      = 17                                      # сколько недель разворачивать
