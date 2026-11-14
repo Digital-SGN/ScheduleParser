@@ -101,7 +101,7 @@ flowchart TD
     File[("<b>schedule.json</b><br/>или .csv")]
 
     LKS -->|"GET /structure"| Parser
-    LKS -->|"GET /schedules/*<br/>(N потоков)"| Parser
+    LKS -->|"GET /schedules/<br/>(N потоков)"| Parser
     Parser -->|"Расчет дат<br/>и парсинг аудиторий"| File
 
     classDef api fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155;
