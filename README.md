@@ -23,10 +23,6 @@
 - <img src="https://cdn.simpleicons.org/json/0CBFA1" width="16" /> **Нормализация:** превращает сырые дни недели в реальные календарные даты, а UUID аудиторий — в понятные номера.
 - <img src="https://cdn.simpleicons.org/databricks/0CBFA1" width="16" /> **Сохранение:** выгружает готовые данные в JSON или CSV.
 
-> **Этот скрипт — фундамент для будущих проектов:**
-> - <img src="https://cdn.simpleicons.org/googlemaps/0CBFA1" width="16" /> Поиск свободных аудиторий.
-> - <img src="https://cdn.simpleicons.org/gnometerminal/0CBFA1" width="16" /> Калькулятор нагрузки.
-
 ## Установка
 
 ```bash
