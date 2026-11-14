@@ -89,7 +89,7 @@ DONE: сохранено в schedule.json
 **Backend:**
 
 - <img src="https://cdn.simpleicons.org/python/0CBFA1" width="16" /> Python 3.12
-- <img src="https://cdn.simpleicons.org/json/0CBFA1" width="16" /> JSON / CSV (выходной формат)
+- <img src="https://cdn.simpleicons.org/json/0CBFA1" width="16" /> JSON / CSV 
 
 **Инструменты:**
 
@@ -99,14 +99,14 @@ DONE: сохранено в schedule.json
 ## Архитектура
 
 ```mermaid
-flowchart LR
-    LKS["API LKS МГТУ<br/>/structure<br/>/schedules/groups/{uuid}/public"]
-    Parser["main.py<br/>(Python)"]
-    File[("JSON/CSV Файл")]
+flowchart TD
+    LKS["**API LKS МГТУ**<br/>/structure<br/>/schedules/groups/{uuid}/public"]
+    Parser["**main.py**<br/>(сбор и нормализация)"]
+    File[("**schedule.json**<br/>или .csv")]
 
     LKS -->|"GET /structure"| Parser
     LKS -->|"GET /schedules/*<br/>(N потоков)"| Parser
-    Parser -->|"Нормализация"| File
+    Parser -->|"Расчет дат<br/>и парсинг аудиторий"| File
 
     classDef api fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155;
     classDef parser fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
