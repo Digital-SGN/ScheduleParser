@@ -1,6 +1,5 @@
 import datetime
 from tqdm import tqdm
-
 from enums import DayOfWeek
 
 
@@ -8,23 +7,25 @@ def lesson_to_dict(
     lesson: dict,
     date: datetime.date,
     day_of_week: DayOfWeek,
-    teachers: list,
+    teachers: list[str],
     group_name: str,
-    audiences: list
+    audiences: list[str],
 ) -> dict:
     """
-    Преобразует информацию о занятии в словарь.
+    Собирает плоский словарь занятия для сохранения в файл.
 
     Args:
-        lesson: Исходные данные о занятии.
-        date: Дата проведения занятия.
+        lesson: Сырые данные занятия из API LKS.
+        date: Календарная дата занятия.
         day_of_week: День недели.
-        teachers: Список преподавателей.
+        teachers: ФИО преподавателей.
         group_name: Название учебной группы.
-        audiences: Список аудиторий.
+        audiences: Названия аудиторий.
 
     Returns:
-        Словарь с обработанной информацией о занятии.
+        Словарь с полями ``date``, ``group_name``, ``discipline``,
+        ``start_time``, ``end_time``, ``teachers``, ``audiences``,
+        ``lesson_type``, ``week_type``, ``day_of_week``.
     """
     return {
         'date': date.isoformat(),
@@ -34,93 +35,91 @@ def lesson_to_dict(
         'end_time': lesson['endTime'],
         'teachers': teachers,
         'audiences': audiences,
-        'lesson_type': lesson['discipline'].get('actType'),
+        'lesson_type': lesson['discipline'].get('actType') or 'other',
         'week_type': lesson['week'],
-        'day_of_week': day_of_week,
+        'day_of_week': day_of_week.value,
     }
 
 
 def get_date(
-    week_number: int,
-    day_of_week: DayOfWeek,
-    start_date: datetime.date
+        week_number: int,
+        day_of_week: DayOfWeek,
+        start_date: datetime.date
 ) -> datetime.date:
     """
-    Вычисляет дату занятия на основе номера учебной недели.
+    Вычисляет календарную дату занятия.
 
     Args:
         week_number: Номер учебной недели.
-        day_of_week: День недели проведения занятия.
+        day_of_week: День недели занятия.
         start_date: Дата начала семестра.
 
     Returns:
-        Дата проведения занятия.
+        Дата занятия.
     """
     days_to_add = (
         (week_number - 1) * 7
         + (day_of_week.value - start_date.isoweekday())
     )
+
     return start_date + datetime.timedelta(days=days_to_add)
 
 
-def get_teachers(lesson: dict) -> list:
+def get_teachers(lesson: dict) -> list[str]:
     """
-    Извлекает список преподавателей из данных о занятии.
+    Извлекает ФИО преподавателей из сырых данных занятия.
 
     Args:
-        lesson: Исходные данные о занятии.
+        lesson: Сырые данные занятия из API LKS.
 
     Returns:
-        Список полных имён преподавателей.
+        Список строк вида ``"Имя Отчество Фамилия"``.
     """
     return [
-        f'{teacher["firstName"]} {teacher["middleName"]} {teacher["lastName"]}'
-        for teacher in lesson['teachers']
+        f'{t["firstName"]} {t["middleName"]} {t["lastName"]}'
+        for t in lesson.get('teachers', [])
     ]
 
 
-def get_audiences(lesson: dict) -> list:
+def get_audiences(lesson: dict) -> list[str]:
     """
-    Извлекает список аудиторий из данных о занятии.
+    Извлекает названия аудиторий из сырых данных занятия.
 
     Args:
-        lesson: Исходные данные о занятии.
+        lesson: Сырые данные занятия из API LKS.
 
     Returns:
-        Список названий аудиторий.
+        Список названий аудиторий, пустой список, если аудитория не назначена.
     """
-    return [
-        audience['name']
-        for audience in lesson.get('audiences', [])
-    ]
+    return [a['name'] for a in lesson.get('audiences', [])]
 
 
 def parse_schedule(
-    schedule: dict,
-    week_numbers: int,
-    start_date: datetime.date
-) -> list:
+        schedule: dict,
+        week_numbers: int,
+        start_date: datetime.date
+) -> list[dict]:
     """
-    Преобразует расписание учебных групп в список отдельных занятий.
-
-    Обрабатывает занятия с учётом их типа недели и вычисляет даты
-    проведения на основе начала семестра.
+    Разворачивает расписание групп в плоский список занятий с датами.
 
     Args:
-        schedule: Словарь расписаний, где ключ — название группы,
-            а значение — список её занятий.
-        week_numbers: Количество учебных недель для обработки.
+        schedule: ``{название_группы: список_занятий}``.
+        week_numbers: Сколько недель разворачивать.
         start_date: Дата начала семестра.
 
     Returns:
-        Список словарей с обработанными занятиями.
+        Список занятий — по одному словарю на каждое занятие.
+
+    Raises:
+        ValueError: В данных занятия встретился неизвестный ``day``.
+        KeyError: В данных занятия нет обязательного поля.
     """
-    lessons = []
+    lessons: list[dict] = []
 
     for group_name, group_schedule in tqdm(
         schedule.items(),
-        desc="Обработка групп",
-        unit="группа"
+        desc='Нормализация',
+        unit='гр',
     ):
         for lesson in group_schedule:
             day_of_week = DayOfWeek(lesson['day'])
@@ -129,23 +128,25 @@ def parse_schedule(
             audiences = get_audiences(lesson)
 
             if week_type == 'all':
-                week_starter = 0
-                week_jumper = 1
-            else:
-                week_starter = 1 if week_type == 'zn' else 0
-                week_jumper = 2
+                week_starter, week_jumper = 0, 1
+            elif week_type == 'zn':
+                week_starter, week_jumper = 1, 2
+            else:  # 'ch'
+                week_starter, week_jumper = 0, 2
 
             for i in range(week_starter, week_numbers, week_jumper):
-                if i != 0 or start_date.isoweekday() <= day_of_week.value:
-                    date = get_date(i + 1, day_of_week, start_date)
-                    lesson_dict = lesson_to_dict(
-                        lesson,
-                        date,
-                        day_of_week,
-                        teachers,
-                        group_name,
-                        audiences
-                    )
-                    lessons.append(lesson_dict)
+                if i == 0 and start_date.isoweekday() > day_of_week.value:
+                    continue
+
+                date = get_date(i + 1, day_of_week, start_date)
+                lessons.append(lesson_to_dict(
+                    lesson, date, day_of_week, teachers, group_name, audiences,
+                ))
+
+    lessons.sort(key=lambda x: (
+        x['group_name'],
+        x['date'],
+        x['start_time'],
+    ))
 
     return lessons
