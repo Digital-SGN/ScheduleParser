@@ -1,0 +1,10 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+schedule.json
+schedule.csv
+
+.idea/
+.vscode/
