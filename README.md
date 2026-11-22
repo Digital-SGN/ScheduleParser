@@ -46,8 +46,6 @@ pip install -r requirements.txt
 | `TIMEOUT` | `30` | Таймаут одного запроса, сек |
 | `VERBOSE` | `False` | Подробные логи (уровень DEBUG) |
 
-После настройки `settings.py`:
-
 ## Запуск
 ```bash
 python src/main.py
