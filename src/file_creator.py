@@ -30,7 +30,6 @@ def _save_as_json(schedule: list[dict], path: Path) -> None:
 
 
 def _save_as_csv(schedule: list[dict], path: Path) -> None:
-    """Сохраняет расписание в CSV"""
     if not schedule:
         path.write_text('', encoding='utf-8')
         return
@@ -39,9 +38,17 @@ def _save_as_csv(schedule: list[dict], path: Path) -> None:
     with path.open('w', encoding='utf-8', newline='') as file:
         writer = csv.DictWriter(file, fieldnames=fieldnames)
         writer.writeheader()
+
         for lesson in schedule:
             row = dict(lesson)
-            for key in ('teachers', 'audiences'):
-                if isinstance(row.get(key), list):
-                    row[key] = '; '.join(row[key])
+
+            if isinstance(row.get('teachers'), list):
+                row['teachers'] = '; '.join(row['teachers'])
+
+            if isinstance(row.get('audiences'), list):
+                row['audiences'] = '; '.join(
+                    f"{a['name']}|{a.get('building_id') or ''}|{a.get('building') or ''}"
+                    for a in row['audiences']
+                )
+
             writer.writerow(row)

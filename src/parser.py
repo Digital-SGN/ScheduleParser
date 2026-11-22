@@ -81,17 +81,32 @@ def get_teachers(lesson: dict) -> list[str]:
     ]
 
 
-def get_audiences(lesson: dict) -> list[str]:
+def get_audiences(lesson: dict) -> list[dict]:
     """
-    Извлекает названия аудиторий из сырых данных занятия.
+    Извлекает аудитории с корпусом из сырых данных занятия.
 
     Args:
         lesson: Сырые данные занятия из API LKS.
 
     Returns:
-        Список названий аудиторий, пустой список, если аудитория не назначена.
+        Список объектов {name, building, building_id}. Пустой список,
+        если аудитория не назначена.
+
+    Note:
+        building_id — стабильный числовой идентификатор корпуса
+        building — человекочитаемое название ("A1 ГУК", "B1 ХимЛаб"), может быть None.
     """
-    return [a['name'] for a in lesson.get('audiences', [])]
+    audiences: list[dict] = []
+    for a in lesson.get('audiences', []):
+        name = a.get('name')
+        if not name:
+            continue
+        audiences.append({
+            'name': name,
+            'building': a.get('building'),
+            'building_id': a.get('building_id_building'),
+        })
+    return audiences
 
 
 def parse_schedule(
