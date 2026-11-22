@@ -23,50 +23,32 @@
 - <img src="https://cdn.simpleicons.org/json/0CBFA1" width="16" /> **Нормализация:** превращает сырые дни недели в реальные календарные даты, а UUID аудиторий — в понятные номера.
 - <img src="https://cdn.simpleicons.org/databricks/0CBFA1" width="16" /> **Сохранение:** выгружает готовые данные в JSON или CSV.
 
-> **Этот скрипт — фундамент для будущих проектов:**
-> - <img src="https://cdn.simpleicons.org/googlemaps/0CBFA1" width="16" /> Поиск свободных аудиторий.
-> - <img src="https://cdn.simpleicons.org/gnometerminal/0CBFA1" width="16" /> Калькулятор нагрузки.
-
 ## Установка
 
 ```bash
+git clone https://github.com/Digital-SGN/ScheduleParser
+cd ScheduleParser
+
 python -m venv .venv
 source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Настройка
-
-Все параметры — в `src/settings.py`. Отредактируйте файл перед запуском:
-
-```python
-# src/settings.py
-
-FILIAL     = '8c1b7bb8-e690-11db-89c3-000cf1a7cbf0'  # UUID филиала
-START_DATE = '2026-09-01'                            # начало семестра
-WEEKS      = 17                                      # сколько недель разворачивать
-OUTPUT     = 'schedule.json'                         # .json или .csv
-WORKERS    = 16                                      # потоков параллельных запросов
-TIMEOUT    = 30                                      # таймаут запроса, сек
-VERBOSE    = False                                   # подробные логи (DEBUG)
-```
-
-### Параметры `settings.py`
+## Настройка `src/settings.py`
 
 | Параметр | По умолчанию | Описание |
 |---|---|---|
-| `FILIAL` | — | UUID филиала (см. `/structure` в API LKS) |
-| `START_DATE` | — | Дата начала семестра, `YYYY-MM-DD` |
+| `FILIAL` | `8c1b7... (головной вуз)` | UUID филиала (см. `/structure` в API LKS) |
+| `START_DATE` | `2026-09-01` | Дата начала семестра, `YYYY-MM-DD` |
 | `WEEKS` | `17` | Сколько недель разворачивать |
 | `OUTPUT` | `schedule.json` | Выходной файл (`.json` или `.csv`) |
 | `WORKERS` | `16` | Потоков параллельных запросов |
 | `TIMEOUT` | `30` | Таймаут одного запроса, сек |
 | `VERBOSE` | `False` | Подробные логи (уровень DEBUG) |
 
-## Использование
+После настройки `settings.py`:
 
-После настройки `src/settings.py`:
-
+## Запуск
 ```bash
 python src/main.py
 ```
@@ -75,11 +57,11 @@ python src/main.py
 
 ```text
 Парсер расписания МГТУ им. Баумана
-Филиал: 8c1b7bb8-…  |  Старт: 2026-09-01  |  недель: 17  |  потоков: 16
+Филиал: 8c1b7b...  |  Старт: 2026-09-01  |  недель: 17  |  потоков: 16
 OK: найдено групп: 3005
-Получение расписаний: 100%|████████████| 3005/3005 [00:46<00:00]
+Получение расписаний: 100%|█████████████████████████████| 3005/3005 [00:59<00:00, 50.51гр/s, empty=1027, failed=0] 
 OK: получено расписаний: 1793
-Нормализация: 100%|████████████████████| 1793/1793 [00:00<00:00]
+Нормализация: 100%|█████████████████████████████████████| 1793/1793 [00:00<00:00, 2504.92гр/s]
 OK: занятий: 456596
 DONE: сохранено в schedule.json
 ```
@@ -105,7 +87,7 @@ flowchart TD
     File[("<b>schedule.json</b><br/>или .csv")]
 
     LKS -->|"GET /structure"| Parser
-    LKS -->|"GET /schedules/*<br/>(N потоков)"| Parser
+    LKS -->|"GET /schedules/<br/>(N потоков)"| Parser
     Parser -->|"Расчет дат<br/>и парсинг аудиторий"| File
 
     classDef api fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155;
@@ -134,16 +116,24 @@ flowchart TD
 ```json
 [
   {
-    "date": "2026-10-19",
-    "group_name": "СГН3-35Б",
-    "discipline": "Информатика",
-    "start_time": "10:15",
-    "end_time": "11:50",
-    "teachers": ["Хузин А. Ф."],
-    "audiences": ["501"],
-    "lesson_type": "lab",
-    "week_type": "all",
-    "day_of_week": 1
-  }
+      "date": "2026-12-16",
+      "group_name": "ИУ5-75Б",
+      "discipline": "Безопасность жизнедеятельности",
+      "start_time": "08:30",
+      "end_time": "10:00",
+      "teachers": [
+          "Борис Николаевич Рахманов"
+      ],
+      "audiences": [
+          {
+              "name": "524",
+              "building": "A1 ГУК",
+              "building_id": 21
+          }
+      ],
+      "lesson_type": "lecture",
+      "week_type": "all",
+      "day_of_week": 3
+    }
 ]
 ```

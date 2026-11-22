@@ -81,7 +81,7 @@ def get_teachers(lesson: dict) -> list[str]:
     ]
 
 
-def get_audiences(lesson: dict) -> list[dict]:
+  def get_audiences(lesson: dict) -> list[dict]:
     """
     Извлекает аудитории с корпусом из сырых данных занятия.
 
@@ -89,12 +89,11 @@ def get_audiences(lesson: dict) -> list[dict]:
         lesson: Сырые данные занятия из API LKS.
 
     Returns:
-        Список объектов {name, building, building_id}. Пустой список,
-        если аудитория не назначена.
+        Список объектов {name, building, building_id}. Пустой список, если аудитория не назначена.
 
     Note:
-        building_id — стабильный числовой идентификатор корпуса
-        building — человекочитаемое название ("A1 ГУК", "B1 ХимЛаб"), может быть None.
+        building_id — числовой идентификатор корпуса
+        building — название ("A1 ГУК", "B1 ХимЛаб"), может быть None.
     """
     audiences: list[dict] = []
     for a in lesson.get('audiences', []):
@@ -107,7 +106,7 @@ def get_audiences(lesson: dict) -> list[dict]:
             'building_id': a.get('building_id_building'),
         })
     return audiences
-
+  
 
 def parse_schedule(
         schedule: dict,
