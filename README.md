@@ -34,9 +34,7 @@ source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-## Настройка
-
-Все параметры — в `src/settings.py`:
+## Настройка `src/settings.py`
 
 | Параметр | По умолчанию | Описание |
 |---|---|---|
@@ -48,8 +46,9 @@ pip install -r requirements.txt
 | `TIMEOUT` | `30` | Таймаут одного запроса, сек |
 | `VERBOSE` | `False` | Подробные логи (уровень DEBUG) |
 
-## Запуск
+После настройки `settings.py`:
 
+## Запуск
 ```bash
 python src/main.py
 ```
@@ -117,16 +116,24 @@ flowchart TD
 ```json
 [
   {
-    "date": "2026-10-19",
-    "group_name": "СГН3-35Б",
-    "discipline": "Информатика",
-    "start_time": "10:15",
-    "end_time": "11:50",
-    "teachers": ["Хузин А. Ф."],
-    "audiences": ["501"],
-    "lesson_type": "lab",
-    "week_type": "all",
-    "day_of_week": 1
-  }
+      "date": "2026-12-16",
+      "group_name": "ИУ5-75Б",
+      "discipline": "Безопасность жизнедеятельности",
+      "start_time": "08:30",
+      "end_time": "10:00",
+      "teachers": [
+          "Борис Николаевич Рахманов"
+      ],
+      "audiences": [
+          {
+              "name": "524",
+              "building": "A1 ГУК",
+              "building_id": 21
+          }
+      ],
+      "lesson_type": "lecture",
+      "week_type": "all",
+      "day_of_week": 3
+    }
 ]
 ```
