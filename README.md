@@ -77,25 +77,7 @@ DONE: сохранено в schedule.json
 - <img src="https://cdn.simpleicons.org/gnometerminal/0CBFA1" width="16" /> tqdm (прогресс-бары)
 
 ## Архитектура
-
-```mermaid
-flowchart TD
-    LKS["<b>API LKS МГТУ</b><br/>/structure<br/>/schedules/groups/{uuid}/public"]
-    Parser["<b>main.py</b><br/>(сбор и нормализация)"]
-    File[("<b>schedule.json</b><br/>или .csv")]
-
-    LKS -->|"GET /structure"| Parser
-    LKS -->|"GET /schedules/<br/>(N потоков)"| Parser
-    Parser -->|"Расчет дат<br/>и парсинг аудиторий"| File
-
-    classDef api fill:#f1f5f9,stroke:#64748b,stroke-width:2px,color:#334155;
-    classDef parser fill:#fef3c7,stroke:#d97706,stroke-width:2px,color:#78350f;
-    classDef db fill:#e0e7ff,stroke:#6366f1,stroke-width:2px,color:#312e81;
-
-    class LKS api;
-    class Parser parser;
-    class File db;
-```
+<img width="2200" height="1440" alt="schedule-parser-architecture" src="https://github.com/user-attachments/assets/23e06f5e-5535-413b-8c0f-18abc72e3b58" />
 
 ## Механика парсинга
 
