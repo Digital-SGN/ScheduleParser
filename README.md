@@ -23,6 +23,9 @@
 - <img src="https://cdn.simpleicons.org/json/0CBFA1" width="16" /> **Нормализация:** превращает сырые дни недели в реальные календарные даты, а UUID аудиторий — в понятные номера.
 - <img src="https://cdn.simpleicons.org/databricks/0CBFA1" width="16" /> **Сохранение:** выгружает готовые данные в JSON или CSV.
 
+## Архитектура
+<img width="2200" height="1440" src="https://github.com/Digital-SGN/Handbook/blob/main/assets/schedule-parser-architecture_1.png" />
+
 ## Установка
 
 ```bash
@@ -75,9 +78,6 @@ DONE: сохранено в schedule.json
 
 - <img src="https://cdn.simpleicons.org/httpie/0CBFA1" width="16" /> Requests + `ThreadPoolExecutor` (параллельные запросы)
 - <img src="https://cdn.simpleicons.org/gnometerminal/0CBFA1" width="16" /> tqdm (прогресс-бары)
-
-## Архитектура
-<img width="2200" height="1440" alt="schedule-parser-architecture" src="https://github.com/user-attachments/assets/23e06f5e-5535-413b-8c0f-18abc72e3b58" />
 
 ## Механика парсинга
 
